@@ -1,15 +1,4 @@
-#  待完成 
-    1. 字典管理
-    2. 题库管理
-    3. 试卷管理
-    4. 组卷管理
-    5. 试卷预览
-    
-    
-    
-# 
-    target/classes/templates/buzz/question/singlequestion/singlequestion.html
-    
+
     
     
     
@@ -29,7 +18,6 @@
     3修改form的宽度
     
     <form id="form1" class="layui-form" style="width: 60%;margin-top: 20px;">
-    
     
     
 # 关于在layui中的table checkbox 默认选中设置
@@ -67,9 +55,7 @@
        执行： SELECT version();  
        结果： 8.0.12
     
-    
   
-    
     
 # 增加日志id跟踪日志
     （1）先配上aop的maven依赖（已经有aop就不用再加了），这里要注意spring-aop的版本对应上spring-core的版本：
@@ -96,7 +82,6 @@
             </pattern>
     
 
-    
     
     
     
