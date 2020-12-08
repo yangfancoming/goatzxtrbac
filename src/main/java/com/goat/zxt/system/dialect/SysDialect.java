@@ -33,7 +33,7 @@ public class SysDialect extends AbstractProcessorDialect {
     public Set<IProcessor> getProcessors(String dialectPrefix) {
         Set<IProcessor> processors = new HashSet<>();
         // 添加自定义标签
-        processors.add(new SysDictTagProcessor(dialectPrefix));
+//        processors.add(new SysDictTagProcessor(dialectPrefix));
         processors.add(new StandardXmlNsTagProcessor(TemplateMode.HTML, dialectPrefix));
         return processors;
     }

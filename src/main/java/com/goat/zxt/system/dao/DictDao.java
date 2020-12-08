@@ -3,19 +3,17 @@ package com.goat.zxt.system.dao;
 
 import com.goat.zxt.system.entity.SysDict;
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
 
-@Mapper
 public interface DictDao {
 
     /**
      * 模糊查询字典
      */
-    List<SysDict> getFuzzyDictByPage(SysDict myDict);
+    List<SysDict> list(SysDict myDict);
 
     /**
      * 通过字典名称获取字典信息
@@ -25,13 +23,13 @@ public interface DictDao {
     /**
      * 插入字典
      */
-    @Insert("INSERT INTO my_dict(dict_id,dict_name,description, sort,create_time, update_time)values(#{dictId},#{dictName},#{description},#{sort}, now(), now())")
+    @Insert("INSERT INTO sys_dict(dict_id,dict_name,description, sort,create_time, update_time)values(#{dictId},#{dictName},#{description},#{sort}, now(), now())")
     int insertDict(SysDict myDict);
 
     /**
      * 通过id获得字典信息
      */
-    @Select("select di.dict_id,di.dict_name,di.description,di.sort,di.create_time,di.update_time from my_dict di  where di.dict_id = #{dictId}")
+    @Select("select di.dict_id,di.dict_name,di.description,di.sort,di.create_time,di.update_time from sys_dict di  where di.dict_id = #{dictId}")
     SysDict getDictById(Integer dictId);
 
     /**

@@ -26,11 +26,11 @@ public class DictServiceImpl implements DictService {
 
     @Autowired
     private DictDetailDao dictDetailDao;
+
     @Override
-    public Result<SysDict> getDictPage(Integer offectPosition, Integer limit, SysDict myDict) {
-        Page page = PageHelper.offsetPage(offectPosition,limit);
-        List<SysDict> fuzzyDictByPage = dictDao.getFuzzyDictByPage(myDict);
-        return Result.ok().count(page.getTotal()).data(fuzzyDictByPage).code(ResultCode.TABLE_SUCCESS);
+    public List<SysDict> list(SysDict myDict) {
+        List<SysDict> fuzzyDictByPage = dictDao.list(myDict);
+        return fuzzyDictByPage;
     }
 
     @Override

@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
-
 public interface DictDetailDao {
 
     List<SysDictDetail> getDictDetail(Integer dictId);
@@ -15,13 +14,13 @@ public interface DictDetailDao {
     /**
      * 插入字典详情
      */
-    @Insert("INSERT INTO my_dict_detail(dict_id,label,value, sort,create_time, update_time)values(#{dictId},#{label},#{value},#{sort}, now(), now())")
+    @Insert("INSERT INTO sys_dict_detail(dict_id,label,value, sort,create_time, update_time)values(#{dictId},#{label},#{value},#{sort}, now(), now())")
     int insertDictDetail(SysDictDetail myDictDetail);
 
     /**
      * 通过id获得字典详情信息
      */
-    @Select("select did.id,did.dict_id,did.label,did.value,did.sort,did.create_time,did.update_time from my_dict_detail did  where did.id = #{id}")
+    @Select("select did.id,did.dict_id,did.label,did.value,did.sort,did.create_time,did.update_time from sys_dict_detail did  where did.id = #{id}")
     SysDictDetail getDictDetailById(Integer id);
 
     /**
@@ -38,6 +37,6 @@ public interface DictDetailDao {
     /**
      * 根据字典id删除字典详情
      */
-    @Delete("DELETE from my_dict_detail where dict_id = #{dictId}")
+    @Delete("DELETE from sys_dict_detail where dict_id = #{dictId}")
     int deleteDictDetailByDictId(Integer dictId);
 }

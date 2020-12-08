@@ -1,49 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" th:href="@{/PearAdmin/component/layui/css/layui.css}" />
-    <link rel="stylesheet" th:href="@{/PearAdmin/admin/css/pearCommon.css}"/>
+    <header th:replace="header::html"></header>
 </head>
 <body>
 <form class="layui-form" action="">
     <div class="mainBox">
         <div class="main-container">
             <div class="main-container">
-
-                <input type="text" id="dictId" th:value="${sysDict.dictId}" name="dictId" style="display:none;" autocomplete="off" class="layui-input">
-
-
                 <div class="layui-form-item">
                     <label class="layui-form-label">
-                        <span style="color: red">*</span>键:</label>
+                        <span style="color: red">*</span>字典名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="keyy" th:value="${sysDict.keyy}" lay-verify="required" autocomplete="off" placeholder="请输入字典键" class="layui-input">
+                        <input type="text" name="dictName" th:value="${MyDict.dictName}" lay-verify="required" autocomplete="off" placeholder="请输入字典名称" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">
-                        <span style="color: red">*</span>值:</label>
+                        字典描述</label>
                     <div class="layui-input-block">
-                        <input type="text"  name="value"th:value="${sysDict.value}" lay-verify="sort" autocomplete="off" placeholder="请输入字典值" class="layui-input">
+                        <input type="text" name="description" th:value="${MyDict.description}" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-
                 <div class="layui-form-item">
                     <label class="layui-form-label">
-                        <span style="color: red">*</span>表名:</label>
+                        <span style="color: red">*</span>排序</label>
                     <div class="layui-input-block">
-                        <input type="text"  name="tableName"th:value="${sysDict.tableName}" lay-verify="sort" autocomplete="off" placeholder="请输入表名" class="layui-input">
-                    </div>
-                </div>
-
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">
-                        <span style="color: red">*</span>字段:</label>
-                    <div class="layui-input-block">
-                        <input type="text"  name="fieldName"th:value="${sysDict.fieldName}" lay-verify="sort" autocomplete="off" placeholder="请输入字段" class="layui-input">
+                        <input type="text"  name="sort"th:value="${MyDict.sort}" lay-verify="sort" autocomplete="off" placeholder="请输入排序" class="layui-input">
                     </div>
                 </div>
 
@@ -52,7 +37,7 @@
     </div>
     <div class="bottom">
         <div class="button-container">
-            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="dict-edit">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="dict-save">
                 <i class="layui-icon layui-icon-ok"></i>
                 提交
             </button>
@@ -63,21 +48,23 @@
         </div>
     </div>
 </form>
-<script th:src="@{/PearAdmin/component/layui/layui.js}" charset="utf-8"></script>
 <script>
     layui.use(['form','jquery'],function(){
         let form = layui.form;
         let $ = layui.jquery;
-        form.on('submit(dict-edit)', function(data){
+
+        form.on('submit(dict-save)', function(data){
             $.ajax({
-                url:'/api/dict',type:'put',
+                url:'/api/dict',
                 data:JSON.stringify(data.field),
-                dataType:'json',contentType:'application/json',
+                dataType:'json',
+                contentType:'application/json',
+                type:'put',
                 success:function(result){
                     if(result.success){
                         layer.msg(result.msg,{icon:1,time:1000},function(){
                             parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
-                            parent.layui.table.reload("dict-table");
+                            parent.layui.table.reload("dict-type-table");
                         });
                     }else{
                         layer.msg(result.msg,{icon:2,time:1000});
@@ -86,7 +73,12 @@
             })
             return false;
         });
-
+        form.verify({
+            sort:  [
+                /^[1-9]\d*$/
+                ,'只能是整数哦'
+            ],
+        })
     })
 </script>
 </body>

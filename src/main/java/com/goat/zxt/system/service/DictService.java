@@ -5,13 +5,15 @@ import com.goat.zxt.common.exceptionhandler.MyException;
 import com.goat.zxt.common.utils.Result;
 import com.goat.zxt.system.entity.SysDict;
 
+import java.util.List;
+
 public interface DictService {
 
     /**
      * 分页返回字典
      * @return
      */
-    Result<SysDict> getDictPage(Integer offectPosition, Integer limit, SysDict myDict);
+    List<SysDict> list(SysDict myDict);
 
     /**
      * 通过字典名获取字典

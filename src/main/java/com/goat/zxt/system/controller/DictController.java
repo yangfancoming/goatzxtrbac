@@ -2,10 +2,11 @@ package com.goat.zxt.system.controller;
 
 
 
-import com.goat.zxt.common.utils.PageTableRequest;
-import com.goat.zxt.common.utils.Result;
-import com.goat.zxt.common.utils.UserConstants;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.goat.zxt.common.utils.*;
 import com.goat.zxt.system.entity.SysDict;
+import com.goat.zxt.system.entity.SysUser;
 import com.goat.zxt.system.service.DictService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/dict")
@@ -36,10 +39,12 @@ public class DictController {
     @GetMapping
     @ResponseBody
     @PreAuthorize("hasAnyAuthority('dict:list')")
-    public Result getDictAll(PageTableRequest pageTableRequest, SysDict myDict){
+    public Result getDictAll(QueryRequest request, SysDict model){
         log.info("查询字典列表");
-        pageTableRequest.countOffset();
-        return dictService.getDictPage(pageTableRequest.getOffset(),pageTableRequest.getLimit(),myDict);
+        PageHelper.startPage(request.getPage(), request.getLimit());
+        List<SysDict> results = dictService.list(model);
+        PageInfo<SysDict> pageInfo = new PageInfo<>(results);
+        return Result.ok().code(ResultCode.TABLE_SUCCESS).count(pageInfo.getTotal()).data(pageInfo.getList());
     }
 
 
