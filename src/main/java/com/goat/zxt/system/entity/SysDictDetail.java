@@ -2,22 +2,31 @@ package com.goat.zxt.system.entity;
 
 
 
-
-public class SysDict extends BaseEntity{
+public class SysDictDetail extends BaseEntity {
 
     private static final long serialVersionUID=1L;
 
+    private Integer Id;
+
     private Integer dictId;
 
-    private String dictName;
+    private String label;
 
-    private String description;
+    private String value;
 
     private Integer sort;
 
     private String createBy;
 
     private String updateBy;
+
+    public Integer getId() {
+        return Id;
+    }
+
+    public void setId(Integer id) {
+        Id = id;
+    }
 
     public Integer getDictId() {
         return dictId;
@@ -27,20 +36,20 @@ public class SysDict extends BaseEntity{
         this.dictId = dictId;
     }
 
-    public String getDictName() {
-        return dictName;
+    public String getLabel() {
+        return label;
     }
 
-    public void setDictName(String dictName) {
-        this.dictName = dictName;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
-    public String getDescription() {
-        return description;
+    public String getValue() {
+        return value;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public Integer getSort() {

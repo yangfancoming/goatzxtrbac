@@ -2,21 +2,45 @@ package com.goat.zxt.system.dao;
 
 
 import com.goat.zxt.system.entity.SysDict;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
 
+@Mapper
 public interface DictDao {
 
-    int save(SysDict dict);
+    /**
+     * 模糊查询字典
+     */
+    List<SysDict> getFuzzyDictByPage(SysDict myDict);
 
-    int update(SysDict dict);
+    /**
+     * 通过字典名称获取字典信息
+     */
+    SysDict getDictByName(String dictName);
 
-    List<SysDict> findDictList(SysDict dict);
+    /**
+     * 插入字典
+     */
+    @Insert("INSERT INTO my_dict(dict_id,dict_name,description, sort,create_time, update_time)values(#{dictId},#{dictName},#{description},#{sort}, now(), now())")
+    int insertDict(SysDict myDict);
 
-    int deleteByIds(List<String> ids);
+    /**
+     * 通过id获得字典信息
+     */
+    @Select("select di.dict_id,di.dict_name,di.description,di.sort,di.create_time,di.update_time from my_dict di  where di.dict_id = #{dictId}")
+    SysDict getDictById(Integer dictId);
 
-    List<SysDict> findDictKV(SysDict dict);
+    /**
+     * 修改保存字典信息
+     */
+    int updateDict(SysDict myDict);
 
-    SysDict getById(Integer dictId);
+    /**
+     * 批量删除岗位信息
+     */
+    int deleteDictByIds(String[] dictIds);
 }

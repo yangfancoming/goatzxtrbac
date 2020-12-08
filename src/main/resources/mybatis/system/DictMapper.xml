@@ -1,88 +1,47 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codermy.myspringsecurityplus.admin.dao.DictDao">
 
-<mapper namespace="com.goat.zxt.system.dao.DictDao">
 
-    <resultMap id="dictMap" type="com.goat.zxt.system.entity.SysDict">
-        <id column="DICT_ID" jdbcType="DECIMAL" property="dictId" />
-        <result column="KEYY" jdbcType="DECIMAL" property="keyy" />
-        <result column="VALUE" jdbcType="VARCHAR" property="value" />
-        <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
-        <result column="FIELD_NAME" jdbcType="VARCHAR" property="fieldName" />
-        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
-        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    </resultMap>
-
-    <sql id="postFragment">
-        select d.dict_id,d.keyy,d.value,d.table_name,d.field_name,d.update_time,d.create_time from sys_dict d
+    <sql id="selectDictVo">
+        select di.dict_id,di.dict_name,di.description,di.sort,di.create_by,di.update_by,di.create_time,di.update_time
+        from my_dict di
     </sql>
 
-
-    <select id="getById" resultMap="dictMap" >
-        <include refid="postFragment"/>
+    <select id="getFuzzyDictByPage" resultType="com.codermy.myspringsecurityplus.admin.entity.MyDict">
+        <include refid="selectDictVo"/>
         <where>
-            <if test="dictId != null and dictId != '' or dictId == 0">
-                AND d.dict_id = #{dictId}
+            <if test="dictName != null and dictName != ''">
+                AND di.dict_name like CONCAT('%', #{dictName}, '%')
             </if>
         </where>
+
     </select>
 
-    <insert id="save" parameterType="com.goat.zxt.system.entity.SysDict" >
-        insert into sys_dict (KEYY, VALUE,FIELD_NAME,TABLE_NAME,create_time, update_time) values(#{keyy},#{value},#{fieldName},#{tableName},now(), now())
-    </insert>
+    <select id="getDictByName" parameterType="string" resultType="com.codermy.myspringsecurityplus.admin.entity.MyDict">
+        <include refid="selectDictVo"/>
+        where di.dict_name = #{dictName}
+    </select>
 
 
-    <update id="update" parameterType="com.goat.zxt.system.entity.SysPost">
-        update sys_dict
+    <update id="updateDict" parameterType="com.codermy.myspringsecurityplus.admin.entity.MyDict">
+        update my_dict
         <set>
-            <if test="keyy != null and keyy != '' or keyy == 0 ">KEYY = #{keyy},</if>
-            <if test="value != null and value != '' or value == 0">value = #{value},</if>
-            <if test="tableName != null and tableName != '' ">table_name = #{tableName},</if>
-            <if test="fieldName != null and fieldName != '' ">field_name = #{fieldName},</if>
-            update_time = now()
+            <if test="dictName != null and dictName != ''">dict_name = #{dictName},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="sort != null and sort != ''">sort = #{sort},</if>
+            update_time = #{updateTime}
         </set>
         where dict_id = #{dictId}
     </update>
 
 
-    <select id="findDictList" resultMap="dictMap" parameterType="com.goat.zxt.system.entity.SysDict">
-        SELECT  *  FROM sys_dict  WHERE 1=1
-        <if test="dictId !=null and dictId != ''">
-            AND DICT_ID = #{dictId}
-        </if>
-        <if test="keyy !=null and keyy != ''">
-            AND KEYY = #{keyy}
-        </if>
-        <if test="value !=null and value != ''">
-            AND value = #{value}
-        </if>
-        <if test="fieldName !=null and fieldName != ''">
-            AND FIELD_NAME = #{fieldName}
-        </if>
-        <if test="tableName !=null and tableName != ''">
-            AND TABLE_NAME = #{tableName}
-        </if>
-    </select>
-
-
-    <delete id="deleteByIds" parameterType="Long">
-        delete from sys_dict where dict_id in
-        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
-            #{item}
+    <delete id="deleteDictByIds" parameterType="integer">
+        delete from my_dict where dict_id in
+        <foreach collection="array" item="dictId" open="(" separator="," close=")">
+            #{dictId}
         </foreach>
     </delete>
-
-
-    <select id="findDictKV" resultMap="dictMap" parameterType="com.goat.zxt.system.entity.SysDict">
-        SELECT keyy  ,value FROM sys_dict WHERE 1=1
-        <if test="tableName !=null and tableName != ''">
-            AND TABLE_NAME = #{tableName}
-        </if>
-        <if test="fieldName !=null and fieldName != ''">
-            AND FIELD_NAME = #{fieldName}
-        </if>
-        ORDER BY KEYY
-    </select>
-
-
 </mapper>

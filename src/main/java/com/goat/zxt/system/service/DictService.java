@@ -1,21 +1,60 @@
 package com.goat.zxt.system.service;
 
 
+import com.goat.zxt.common.exceptionhandler.MyException;
+import com.goat.zxt.common.utils.Result;
 import com.goat.zxt.system.entity.SysDict;
-
-import java.util.List;
 
 public interface DictService {
 
-	List<SysDict> findAllDicts(SysDict dict);
+    /**
+     * 分页返回字典
+     * @return
+     */
+    Result<SysDict> getDictPage(Integer offectPosition, Integer limit, SysDict myDict);
 
-    SysDict getById(Integer dictId);
+    /**
+     * 通过字典名获取字典
+     * @param dictName
+     * @return
+     */
+    SysDict getDictByName(String dictName);
 
-    int save(SysDict dict);
+    /**
+     * 校验字典名称
+     *
+     * @param myDict 岗位信息
+     * @return 结果
+     */
+    String checkDictNameUnique(SysDict myDict);
 
-	void deleteDicts(String dictIds);
+    /**
+     * 新增字典信息
+     * @param myDict 岗位信息
+     * @return 结果
+     */
+    int insertDict(SysDict myDict);
 
-	int update(SysDict dicdt);
+    /**
+     * 通过id获得字典信息
+     * @param dictId
+     * @return
+     */
+    SysDict getDictById(Integer dictId);
 
-    List<SysDict> findDictKV(SysDict dict);
+    /**
+     * 修改保存自带你信息
+     *
+     * @param myDict 岗位信息
+     * @return 结果
+     */
+    int updateDict(SysDict myDict);
+
+    /**
+     * 批量删除岗位信息
+     * @param ids 需要删除的数据ID
+     * @return 结果
+     * @throws MyException 异常
+     */
+    int deleteDictByIds(String ids)throws MyException;
 }
