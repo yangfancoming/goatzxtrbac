@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goat.zxt.system.dao.PostDao">
+
+    <resultMap id="postMap" type="com.goat.zxt.system.entity.SysPost">
+        <id column="post_id" jdbcType="INTEGER" property="postId" />
+        <result column="post_name" jdbcType="VARCHAR" property="postName" />
+        <result column="post_sort" jdbcType="INTEGER" property="postSort" />
+        <result column="post_status" jdbcType="BOOLEAN" property="postStatus" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <sql id="postFragment">
+        select p.post_id,p.post_name,p.post_sort,p.post_status,p.create_time,p.update_time from sys_post p
+    </sql>
+
+    <select id="list" resultMap="postMap">
+        <include refid="postFragment"/>
+        <where>
+            <if test="postId != null and postId != '' or postId == 0">
+                AND p.post_id = #{postId}
+            </if>
+            <if test="postName != null and postName != ''">
+                AND p.post_name like CONCAT('%', #{postName}, '%')
+            </if>
+            <if test="postStatus!= null and postStatus != '' or postStatus == 0">
+                AND p.post_status = #{postStatus}
+            </if>
+        </where>
+        order by p.post_sort
+    </select>
+
+
+    <select id="buildPost" resultType="com.goat.zxt.system.dto.TreeDto">
+        select p.post_id as id,p.post_name as title  from sys_post p  WHERE  1=1
+        <if test="postIds !=null and postIds != '' ">
+            AND p.POST_ID IN
+            <foreach collection="postIds" item="postIds" separator="," open="(" close=")">
+                #{postIds}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="getPostById"  resultMap="postMap">
+        <include refid="postFragment"/>
+        where p.post_id= #{postId} limit 1
+    </select>
+
+    <select id="isExist" parameterType="String" resultMap="postMap">
+        <include refid="postFragment"/>
+        where p.post_name= #{postName} limit 1
+    </select>
+
+
+    <delete id="deleteByIds" parameterType="integer">
+        delete from sys_post where post_id in
+        <foreach collection="array" item="postId" open="(" separator="," close=")">
+            #{postId}
+        </foreach>
+    </delete>
+
+    <select id="selectPostsByUserId" parameterType="integer" resultMap="postMap">
+		SELECT p.post_id, p.post_name,p.post_status
+		FROM sys_user u
+			 LEFT JOIN sys_user_post up ON u.user_id = up.user_id
+			 LEFT JOIN sys_post p ON up.post_id = p.post_id
+		WHERE up.user_id = #{userId}
+	</select>
+
+
+    <select id="selectPostAll" resultMap="postMap">
+        <include refid="postFragment"/>
+    </select>
+
+    <select id="selectPostMutex" resultMap="postMap">
+        SELECT * FROM sys_post p WHERE p.post_id NOT IN (
+            SELECT up.post_id FROM sys_user_post up WHERE 1=1
+        <if test="userId != null and userId != '' ">
+            AND up.user_id !=  #{userId}
+        </if>
+            )
+    </select>
+
+
+
+    <update id="update" parameterType="com.goat.zxt.system.entity.SysPost">
+        update sys_post
+        <set>
+            <if test="postName != null and postName != ''">post_name = #{postName},</if>
+            <if test="postStatus != null">post_status = #{postStatus},</if>
+            <if test="postSort != null and postSort != ''">post_sort = #{postSort},</if>
+            update_time = #{updateTime}
+        </set>
+        where post_id = #{postId}
+    </update>
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="postId" parameterType="com.goat.zxt.system.entity.SysPost">
+        INSERT INTO sys_post (
+        <trim suffix="" suffixOverrides=",">
+            <if test="postStatus!=null and postStatus!='' or postStatus==0 ">post_status, </if>
+            <if test="postName!=null and postName!='' ">post_name, </if>
+            <if test="postSort!=null and postSort!='' ">post_sort, </if>
+            create_time,update_time
+        </trim>)
+        VALUES (
+        <trim suffix="" suffixOverrides=",">
+            <if test="postStatus!=null and postStatus!='' or postStatus==0 ">#{postStatus}, </if>
+            <if test="postName!=null and postName!=''">#{postName}, </if>
+            <if test="postSort!=null and postSort!=''">#{postSort}, </if>
+            now(), now()
+        </trim>)
+    </insert>
+</mapper>

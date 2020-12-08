@@ -1,0 +1,23 @@
+
+
+
+#logging:
+#  file:
+#    path: src\main\resources\logger\ # logger文件夹需要提前生成
+
+
+#mybatis配置
+
+mybatis:
+  # 指定mybatis全局配置文件位置
+  config-location: classpath:mybatis/mybatis-config.xml
+  # 指定mybatis sql映射文件位置
+  mapper-locations: classpath:mybatis/*/*.xml
+#  type-aliases-package: com.goat.zxt.system.entity
+  map-underscore-to-camel-case: true
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: goatrbac #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer ' #JWT负载中拿到开头

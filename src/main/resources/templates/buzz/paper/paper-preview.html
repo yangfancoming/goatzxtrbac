@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" content="text/html;charset=utf-8">
+    <title></title>
+    <link rel="stylesheet" th:href="@{/PearAdmin/component/layui/css/layui.css}" />
+    <link rel="stylesheet" th:href="@{/PearAdmin/admin/css/pearCommon.css}"/>
+
+    <link rel="stylesheet" data-th-href="@{/test.css}">
+</head>
+<body class="pear-container">
+
+<!-- preview paper-->
+
+
+<div class="main">
+    <div class="test_main">
+        <div class="nr_left">
+            <!-- 试卷-->
+            <div class="test" th:each="map:${questions}">
+
+                <th:block th:switch="${map.key}">
+
+
+                    <th:block th:case="0">
+                        <!-- 题型-->
+                        <div class="test_content">
+                            <div class="test_content_title">
+                                <h2> 单选题</h2>
+                                <p><span>共</span><i class="content_lit">60</i><span>题，</span><span>合计</span><i class="content_fs">60</i><span>分</span> </p>
+                            </div>
+                        </div>
+                        <!-- 题目内容 -->
+                        <div class="test_content_nr" th:each="question,stat:${map.value}">
+                            <ul>
+                                <!-- 试题id的组成为：  试卷id + 试题类型 + 试题id -->
+                                <li th:id="${paperId} +  '-' + ${question.getQuestionType()} +  '-' + ${question.getQuestionId()}">
+                                    <!-- 题干 -->
+                                    <div class="test_content_nr_tt">
+                                        <i>[[${stat.index} + 1]]</i> <span>(1分)</span><span th:text="${question.getQuestionDesc()}" > </span>
+                                    </div>
+
+                                    <!-- 选项 -->
+                                    <div class="test_content_nr_main">
+                                        <ul>
+                                            <li class="option" th:each="format:${question.getQuestionFormat()}">
+                                                <div th:each="option,stat:${#strings.listSplit(format, '-')}">
+                                                    <input type="radio" class="radioOrCheck" th:name="${question.getQuestionId()}" th:value="${#strings.substringBefore(option,'.')}" id="test" />
+                                                    <label for="test" >
+                                                        <!-- 截取出 A B C D -->
+                                                        <div style="display: inline;" th:text="${#strings.substringBefore(option,'.')}"></div>.
+                                                        <!--  或者这种方式： [[${#strings.substringBefore(option,'.')}]].-->
+                                                        <!-- 截取出 选项内容 -->
+                                                        <p class="ue" style="display: inline;" th:text="${#strings.substringAfter(option,'.')}"></p>
+                                                    </label>
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </th:block>
+
+
+
+                    <th:block th:case="3">
+                        <!-- 题型-->
+                        <div class="test_content">
+                            <div class="test_content_title">
+                                <h2> 填空题</h2>
+                                <p><span>共</span><i class="content_lit">60</i><span>题，</span><span>合计</span><i class="content_fs">60</i><span>分</span> </p>
+                            </div>
+                        </div>
+                        <!-- 题目内容 -->
+                        <div class="test_content_nr" th:each="question,stat:${map.value}">
+                            <ul>
+                                <!-- 试题id的组成为：  试卷id + 试题类型 + 试题id -->
+                                <li th:id="${paperId} +  '-' + ${question.getQuestionType()} +  '-' + ${question.getQuestionId()}">
+                                    <!-- 题干 -->
+                                    <div class="test_content_nr_tt">
+                                        <i>[[${stat.index} + 1]]</i> <span>(1分)</span><span th:text="${question.getQuestionDesc()}" > </span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </th:block>
+                </th:block>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

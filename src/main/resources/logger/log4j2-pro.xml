@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  status：用于设置log4j2自身内部日志的信息输出级别，默认是OFF。 多数为 warn ，否则配置级别太低的话 会看到很多log4j2内部日志打印
+ monitorinterval：用于指定 log4j 自动检测配置文件的变更和重新配置本身，单位是秒(s)，最小的间隔时间是5s
+ eg：更改layout样式后，再项目启动状态下，再次build一下，过30秒，再打印日志，日志样式就会改变，证明日志配置文件已经重新加载
+-->
+
+<Configuration name="baseConf" status="warn" monitorInterval="30">
+
+<!--全局参数 自定义一些常量，之后使用${变量名}引用-->
+<Properties>
+<!--    <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss,SSS} %6p  [%t]  %c{1}:%L - %m%n</Property>-->
+
+    <Property name="pattern">
+        [ %-5level] [%date{yyyy-MM-dd HH:mm:ss}] [%X{requestId}] %logger{96} [%line] - %msg%n
+    </Property>
+
+    <Property name="logFilePath">logs</Property>
+    <Property name="logFileName">test.log</Property>
+</Properties>
+
+
+<Appenders>
+    <!--
+Console：用于定义输出到控制台的 Appender
+name：指定 Appender 的名字
+target：SYSTEM_OUT 或 SYSTEM_ERR,一般只设置默认:SYSTEM_OUT
+PatternLayout：输出格式，不设置默认为 %m%n
+     -->
+    <Console name="Console" target="SYSTEM_OUT" follow="true">
+        <!--控制台只输出level及以上级别的信息-->
+        <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+        <PatternLayout>
+            <Pattern>${pattern}</Pattern>
+        </PatternLayout>
+    </Console>
+
+    <RollingFile name="RollingFileDebug" fileName="logs/debug.log" filePattern="logs/$${date:yyyy-MM-dd}/debug-%d{yyyy-MM-dd}-%i.log">
+        <!--ThresholdFilter :日志输出过滤-->
+        <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+        <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+        <!-- Policies :日志滚动策略-->
+        <Policies>
+            <!-- TimeBasedTriggeringPolicy :时间滚动策略,默认0点小时产生新的文件,
+            interval="6" : 自定义文件滚动时间间隔,每隔6小时产生新文件,
+            sos 这里的 interval 指的是 filePattern 中配置的最小单位的时间间隔，如果配置date:yyyy-MM-dd那么就是每隔6天，date:yyyy-MM-dd-hh 那么就是每隔6小时，以此类推
+            modulate="true" : 产生文件是否以0点偏移时间,即6点,12点,18点,0点，如果没到整点时间 就由于size策略生成日志文件，那么文件名的时间为整点时间的前一个小时 -->
+            <TimeBasedTriggeringPolicy interval="1" modulate="false"/>
+            <!-- SizeBasedTriggeringPolicy :文件大小滚动策略-->
+            <SizeBasedTriggeringPolicy size="30 MB"/>
+        </Policies>
+        <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
+        <DefaultRolloverStrategy max="20"/>
+    </RollingFile>
+
+
+<!--    <RollingFile name="RollingFileInfo" fileName="${logFilePath}/${logFileName}"  filePattern="${logFilePath}/$${date:yyyy-MM&#45;&#45;dd}/info-%d{yyyy-MM-dd}-%i.log">-->
+    <RollingFile name="RollingFileInfo" fileName="logs/info.log" filePattern="logs/$${date:yyyy-MM-dd}/info-%d{yyyy-MM-dd}-%i.log">
+        <!--ThresholdFilter :日志输出过滤-->
+        <!--level="info" :日志级别,onMatch="ACCEPT" :级别在info之上则接受,onMismatch="DENY" :级别在info之下则拒绝-->
+        <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+        <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+        <!-- Policies :日志滚动策略-->
+        <Policies>
+            <!-- TimeBasedTriggeringPolicy :时间滚动策略,默认0点小时产生新的文件,
+            interval="6" : 自定义文件滚动时间间隔,每隔6小时产生新文件,
+            modulate="true" : 产生文件是否以0点偏移时间,即6点,12点,18点,0点-->
+<!--            <TimeBasedTriggeringPolicy interval="6" modulate="true"/>-->
+            <!-- SizeBasedTriggeringPolicy :文件大小滚动策略-->
+            <TimeBasedTriggeringPolicy interval="1" modulate="false"/>
+            <SizeBasedTriggeringPolicy size="30 MB"/>
+        </Policies>
+        <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
+        <DefaultRolloverStrategy max="10"/>
+    </RollingFile>
+
+
+    <RollingFile name="RollingFileWarn" fileName="logs/warn.log" filePattern="logs/$${date:yyyy-MM-dd}/warn-%d{yyyy-MM-dd}-%i.log">
+        <!--level="warn" :日志级别,onMatch="ACCEPT" :级别在warn之上则接受,onMismatch="DENY" :级别在warn之下则拒绝-->
+        <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+        <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+        <Policies>
+            <TimeBasedTriggeringPolicy interval="1" modulate="false"/>
+            <SizeBasedTriggeringPolicy size="30 MB"/>
+        </Policies>
+        <DefaultRolloverStrategy max="20"/>
+    </RollingFile>
+
+
+    <RollingFile name="RollingFileError" fileName="logs/error.log" filePattern="logs/$${date:yyyy-MM-dd}/error-%d{yyyy-MM-dd}-%i.log">
+        <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+        <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+        <Policies>
+            <TimeBasedTriggeringPolicy interval="1" modulate="false"/>
+            <SizeBasedTriggeringPolicy size="30 MB"/>
+        </Policies>
+        <DefaultRolloverStrategy max="20"/>
+    </RollingFile>
+    
+
+</Appenders>
+
+    <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+    <loggers>
+        <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
+        <!--Logger节点用来单独指定日志的形式，name为包路径,比如要为org.springframework包下所有日志指定为INFO级别等。 -->
+        <logger name="org.springframework" level="INFO"></logger>
+        <logger name="org.mybatis" level="INFO"></logger>
+
+        <!-- 下面的logger需要修改为你的项目根路径，如com.goat -->
+        <logger name="com.goat" level="DEBUG" includeLocation="true" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileDebug"/>
+            <appender-ref ref="RollingFileInfo"/>
+        </logger>
+
+        <!-- Root节点用来指定项目的根日志，如果没有单独指定Logger，那么就会默认使用该Root日志输出 -->
+<!--        <root level="INFO">-->
+<!--            <appender-ref ref="Console"/>-->
+<!--            <appender-ref ref="RollingFileDebug"/>-->
+<!--            <appender-ref ref="RollingFileInfo"/>-->
+<!--            <appender-ref ref="RollingFileWarn"/>-->
+<!--            <appender-ref ref="RollingFileError"/>-->
+<!--        </root>-->
+
+    </loggers>
+ </Configuration>

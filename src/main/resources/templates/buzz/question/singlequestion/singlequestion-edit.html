@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/PearAdmin/component/layui/css/layui.css}" />
+    <link rel="stylesheet" th:href="@{/PearAdmin/admin/css/pearCommon.css}"/>
+    <link rel="stylesheet" th:href="@{/PearAdmin/admin/css/pear-tree/dtree.css}" />
+    <link rel="stylesheet" th:href="@{/PearAdmin/admin/css/pear-tree/font/dtreefont.css}"/>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+
+                <input type="text" id="questionId" th:value="${singlequestion.questionId}" name="questionId" style="display:none;" autocomplete="off" class="layui-input">
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span style="color: red">*</span>科目:</label>
+                    <div class="layui-input-block">
+                        <sys:dict  name="subjectId" id="subjectId" tableName="b_subject" fieldName="type" class="layui-input" />
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span style="color: red">*</span>题目:</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="questionDesc" th:value="${singlequestion.questionDesc}" lay-verify="questionDesc" autocomplete="off" placeholder="请输入题目" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span style="color: red">*</span>选项:</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="questionOptions" th:value="${singlequestion.questionOptions}" lay-verify="questionOptions" autocomplete="off" placeholder="请输入选项" class="layui-input">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span style="color: red">*</span>题签:</label>
+                    <div class="layui-input-block">
+                        <input type="number" id="questionLabel" th:value="${singlequestion.questionLabel}" name="questionLabel"  lay-verify="questionLabel" style="display:none;width: 0px" autocomplete="off" class="layui-input">
+                        <ul id="dataTree" class="dtree" data-id="0" th:data-value="${singlequestion.questionLabel}"></ul>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span style="color: red">*</span>答案:</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="questionAnswer" th:value="${singlequestion.questionAnswer}" lay-verify="questionAnswer" autocomplete="off" placeholder="请输入答案" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">文字解析</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="questionText" th:value="${singlequestion.questionText}" lay-verify="sort" autocomplete="off" placeholder="请输入文字解析" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">视频解析</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="questionVideo" th:value="${singlequestion.questionVideo}" lay-verify="sort" autocomplete="off" placeholder="请输入视频地址" class="layui-input">
+                    </div>
+                </div>
+
+<!--                <div class="layui-form-item">-->
+<!--                    <label class="layui-form-label"> 分值:</label>-->
+<!--                    <div class="layui-input-block">-->
+<!--                        <input type="text"  name="questionScore" th:value="${singlequestion.questionScore}" lay-verify="sort" autocomplete="off" placeholder="请输入文字解析" class="layui-input">-->
+<!--                    </div>-->
+<!--                </div>-->
+
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="singlequestion-edit">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script th:src="@{/PearAdmin/component/layui/layui.js}" charset="utf-8"></script>
+<script>
+    layui.use(['form','jquery','dtree'],function(){
+        let form = layui.form;
+        let $ = layui.jquery;
+        let dtree = layui.dtree;
+        dtree.render({
+            elem: "#dataTree",
+            initLevel: "1",
+            width: "100%",
+            method: 'get',
+            dataStyle: "layuiStyle",  //使用layui风格的数据格式
+            response:{message:"msg",statusCode:200},  //修改response中返回数据的定义
+            url: "/api/label/build",
+            dataFormat: "list",  //配置data的风格为list
+            select: true, //指定下拉树模式
+            selectTips: "不选默认是顶级目录",
+            selectCardHeight: "150"
+        });
+
+        var param = dtree.getNowParam("dataTree");
+        formDate = $("#questionLabel");
+        dtree.on("node('dataTree')" ,function(obj){
+            var param = dtree.getNowParam("dataTree");
+            $("#questionLabel").val(param.nodeId);
+            formDate = $("#questionLabel");
+        });
+
+
+        form.on('submit(singlequestion-edit)', function(data){
+            $.ajax({
+                url:'/api/singlequestion',type:'put',
+                data:JSON.stringify(data.field),
+                dataType:'json',contentType:'application/json',
+                success:function(result){
+                    if(result.success){
+                        layer.msg(result.msg,{icon:1,time:1000},function(){
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("singlequestion-table");
+                        });
+                    }else{
+                        layer.msg(result.msg,{icon:2,time:1000});
+                    }
+                }
+            })
+            return false;
+        });
+
+
+
+        //自定义验证规则
+        form.verify({
+            questionDesc: function(value){ if(value.length < 1) return '必须填写题目内容'; },
+            questionOptions: function(value){ if(value.length < 1) return '必须填写选项内容'; },
+            questionAnswer: function(value){ if(value.length < 1) return '必须填写答案'; }
+        });
+    })
+</script>
+</body>
+</html>
