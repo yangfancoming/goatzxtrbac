@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <header th:replace="header::html"></header>
+    <link rel="stylesheet" th:href="@{/PearAdmin/component/layui/css/layui.css}" />
+    <link rel="stylesheet" th:href="@{/PearAdmin/admin/css/pearCommon.css}"/>
+    <script th:src="@{/PearAdmin/component/layui/layui.js}" charset="utf-8"></script>
 </head>
 <body>
 <form class="layui-form" action="">
@@ -14,21 +16,21 @@
                     <label class="layui-form-label">
                         <span style="color: red">*</span>字典名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="dictName" th:value="${MyDict.dictName}" lay-verify="required" autocomplete="off" placeholder="请输入字典名称" class="layui-input">
+                        <input type="text" name="dictName" th:value="${SysDict.dictName}" lay-verify="required" autocomplete="off" placeholder="请输入字典名称" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         字典描述</label>
                     <div class="layui-input-block">
-                        <input type="text" name="description" th:value="${MyDict.description}" lay-verify="required" autocomplete="off" class="layui-input">
+                        <input type="text" name="description" th:value="${SysDict.description}" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         <span style="color: red">*</span>排序</label>
                     <div class="layui-input-block">
-                        <input type="text"  name="sort"th:value="${MyDict.sort}" lay-verify="sort" autocomplete="off" placeholder="请输入排序" class="layui-input">
+                        <input type="text"  name="sort"th:value="${SysDict.sort}" lay-verify="sort" autocomplete="off" placeholder="请输入排序" class="layui-input">
                     </div>
                 </div>
 

@@ -7,8 +7,6 @@
 
     <link rel="stylesheet" th:href="@{/PearAdmin/component/layui/css/layui.css}" />
     <link rel="stylesheet" th:href="@{/PearAdmin/admin/css/pearCommon.css}"/>
-
-
     <script th:src="@{/PearAdmin/component/layui/layui.js}" charset="utf-8"></script>
 </head>
 <body class="pear-container">
@@ -124,32 +122,15 @@
         let table = layui.table;
         let form = layui.form;
         let $ = layui.jquery;
-
         let MODULE_PATH = "operate/";
         let dictId;
         let name;
-
         let cols = [
-            [{
-                type: 'checkbox'
-            },
-                {
-                    title: '字典名称',
-                    field: 'dictName',
-                    align: 'center',
-                    width: 120
-                },
-                {
-                    title: '描述',
-                    field: 'description',
-                    align: 'center'
-                },
-                {
-                    title: '操作',
-                    toolbar: '#dict-type-bar',
-                    align: 'center',
-                    width: 180
-                }
+            [
+                {type: 'checkbox'},
+                { title: '字典名称',field: 'dictName', align: 'center',width: 120},
+                { title: '描述',field: 'description',align: 'center' },
+                { title: '操作',toolbar: '#dict-type-bar',align: 'center',width: 180 }
             ]
         ];
 

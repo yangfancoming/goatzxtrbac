@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <header th:replace="header::html"></header>
+    <link rel="stylesheet" th:href="@{/PearAdmin/component/layui/css/layui.css}" />
+    <link rel="stylesheet" th:href="@{/PearAdmin/admin/css/pearCommon.css}"/>
+    <script th:src="@{/PearAdmin/component/layui/layui.js}" charset="utf-8"></script>
 </head>
 <body>
 <form class="layui-form" action="">
@@ -14,28 +16,28 @@
                     <label class="layui-form-label">
                         <span style="color: red">*</span>字典标签名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="label" th:value="${MyDictDetail.label}" lay-verify="required" autocomplete="off" placeholder="请输入字典名称" class="layui-input">
+                        <input type="text" name="label" th:value="${SysDictDetail.label}" lay-verify="required" autocomplete="off" placeholder="请输入字典名称" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item" style="display: none;">
                     <label class="layui-form-label" >
                         字典ID</label>
                     <div class="layui-input-block">
-                        <input type="text" name="dictId" th:value="${MyDictDetail.dictId}" lay-verify="required" autocomplete="off" class="layui-input">
+                        <input type="text" name="dictId" th:value="${SysDictDetail.dictId}" lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         <span style="color: red">*</span>字典值</label>
                     <div class="layui-input-block">
-                        <input type="text" name="value" th:value="${MyDictDetail.value}" lay-verify="required" placeholder="字典值" autocomplete="off" class="layui-input">
+                        <input type="text" name="value" th:value="${SysDictDetail.value}" lay-verify="required" placeholder="字典值" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         <span style="color: red">*</span>排序</label>
                     <div class="layui-input-block">
-                        <input type="text"  name="sort"th:value="${MyDictDetail.sort}" lay-verify="sort" autocomplete="off" placeholder="请输入排序" class="layui-input">
+                        <input type="text"  name="sort"th:value="${SysDictDetail.sort}" lay-verify="sort" autocomplete="off" placeholder="请输入排序" class="layui-input">
                     </div>
                 </div>
 
