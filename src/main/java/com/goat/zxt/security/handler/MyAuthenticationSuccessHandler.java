@@ -26,10 +26,13 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
     @Autowired
     private JwtUtils jwtUtils;
+
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;
+
     @Value("${jwt.tokenHead}")
     private String tokenHead;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException {
         // JwtUserDto userDetails = (JwtUserDto)authentication.getPrincipal();//拿到登录用户信息
@@ -44,6 +47,5 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         httpServletResponse.setContentType("application/json");
         //输出结果
         httpServletResponse.getWriter().write(JSON.toJSONString(result));
-
     }
 }
