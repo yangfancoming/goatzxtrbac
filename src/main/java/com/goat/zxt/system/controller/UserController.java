@@ -73,7 +73,6 @@ public class UserController {
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         m.setPassword(encoder.encode("123456"));
-//        m.setPassword(Md5.crypt("123456"));
         return userService.save(m,m.getRoleId());
     }
 

@@ -2,6 +2,7 @@ package com.goat.zxt.security.config;
 
 
 import com.goat.zxt.security.UserDetailsServiceImpl;
+import com.goat.zxt.security.filter.VerifyCodeFilter;
 import com.goat.zxt.security.handler.MyAuthenticationFailureHandler;
 import com.goat.zxt.security.handler.MyAuthenticationSuccessHandler;
 import com.goat.zxt.security.handler.RestAuthenticationEntryPoint;
@@ -17,8 +18,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-//import com.goat.zxt.security.filter.VerifyCodeFilter;
 
 
 @EnableWebSecurity
@@ -29,8 +30,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsServiceImpl userDetailsService;
 
     // 验证码拦截器
-//    @Autowired
-//    private VerifyCodeFilter verifyCodeFilter;
+    @Autowired
+    private VerifyCodeFilter verifyCodeFilter;
 
     // 登录成功逻辑
     @Autowired
@@ -83,7 +84,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.addFilterBefore(verifyCodeFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(verifyCodeFilter, UsernamePasswordAuthenticationFilter.class);
         //关闭csrf
         http.csrf().disable()
                 //未登陆时返回 JSON 格式的数据给前端

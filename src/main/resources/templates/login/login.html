@@ -24,10 +24,10 @@
         <input id="password" name="password" placeholder="密 码 : " type="password"  hover class="layui-input" required lay-verify="password"/>
     </div>
 
-    <!--            <div class="layui-form-item">-->
-    <!--                <input id="captcha" name="captcha" placeholder="验 证 码:" type="text"  hover class="layui-verify" style="border: 1px solid #dcdfe6;" required lay-verify="captcha">-->
-    <!--                <img id="captchaImg" src="/captcha" width="130px" height="44px" onclick="this.src=this.src+'?'+Math.random()" title="点击刷新"/>-->
-    <!--            </div>-->
+                <div class="layui-form-item">
+                    <input id="captcha" name="captcha" placeholder="验 证 码:" type="text"  hover class="layui-verify" style="border: 1px solid #dcdfe6;" required lay-verify="captcha">
+                    <img id="captchaImg" src="/captcha" width="130px" height="44px" onclick="this.src=this.src+'?'+Math.random()" title="点击刷新"/>
+                </div>
 
     <div class="layui-form-item">
         <input type="checkbox" id="rememberme" name="rememberme" title="记住密码" lay-skin="primary" checked>
@@ -56,14 +56,14 @@
                     return '密码不能为空';
                 }
             },
-            // captcha: function (value) {
-            // 	if (value.length <= 0) {
-            // 		return '验证码不能为空';
-            // 	}
-            // 	if (value.length !== 4) {
-            // 		return '请输入正确格式的验证码';
-            // 	}
-            // }
+            captcha: function (value) {
+            	if (value.length <= 0) {
+            		return '验证码不能为空';
+            	}
+            	if (value.length !== 4) {
+            		return '请输入正确格式的验证码';
+            	}
+            }
         })
 
         form.on('submit(formLogin)', function() {
@@ -72,7 +72,7 @@
                 data:{
                     username:$('#username').val(),
                     password:$('#password').val(),
-                    // captcha:$('#captcha').val(),
+                    captcha:$('#captcha').val(),
                     rememberme:$('#rememberme').val()
                 },
                 success:function(result){
