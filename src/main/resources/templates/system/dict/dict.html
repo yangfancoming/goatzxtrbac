@@ -79,21 +79,22 @@
         <i class="layui-icon layui-icon-add-1"></i>
         新增
     </button>
-    <button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
-        <i class="layui-icon layui-icon-delete"></i>
-        删除
-    </button>
+<!--    <button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">-->
+<!--        <i class="layui-icon layui-icon-delete"></i>-->
+<!--        删除-->
+<!--    </button>-->
 </script>
 
 <script type="text/html" id="dict-type-bar">
     <button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit">
-        <i class="layui-icon layui-icon-edit"></i>
+        编辑
     </button>
     <button class="pear-btn pear-btn-warming pear-btn-sm" lay-event="details">
-        <i class="layui-icon layui-icon-transfer"></i>
+<!--        <i class="layui-icon layui-icon-transfer"></i>-->
+        详情
     </button>
     <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove">
-        <i class="layui-icon layui-icon-delete"></i>
+        删除
     </button>
 </script>
 
@@ -130,7 +131,7 @@
                 {type: 'checkbox'},
                 { title: '字典名称',field: 'dictName', align: 'center',width: 120},
                 { title: '描述',field: 'description',align: 'center' },
-                { title: '操作',toolbar: '#dict-type-bar',align: 'center',width: 180 }
+                { title: '操作',toolbar: '#dict-type-bar',align: 'center',width: 200 }
             ]
         ];
 
@@ -151,10 +152,10 @@
             skin: 'line',
             height: 'full-148',
             toolbar: '#dict-type-toolbar',
-            defaultToolbar: [{
-                layEvent: 'refresh',
-                icon: 'layui-icon-refresh',
-            }, 'filter', 'print', 'exports']
+            // defaultToolbar: [{
+            //     layEvent: 'refresh',
+            //     icon: 'layui-icon-refresh',
+            // }, 'filter', 'print', 'exports']
         });
 
         window.renderData = function(obj) {
