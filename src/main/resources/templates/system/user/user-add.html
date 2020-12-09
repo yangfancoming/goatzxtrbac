@@ -94,7 +94,6 @@
 
 <script>
     layui.use(['form','formSelects','dtree','jquery'],function(){
-
         let formSelects = layui.formSelects;
         let form = layui.form;
         $ = layui.jquery;
@@ -115,10 +114,10 @@
             select: true, //指定下拉树模式
             selectCardHeight: "200",
         });
-        var param = dtree.getNowParam("dataTree");
+        let param = dtree.getNowParam("dataTree");
         formDate = $("#deptId");
         dtree.on("node('dataTree')" ,function(obj){
-            var param = dtree.getNowParam("dataTree");
+            let param = dtree.getNowParam("dataTree");
             $("#deptId").val(param.nodeId);
             formDate = $("#deptId");
         });
@@ -173,7 +172,7 @@
             type:"GET",
             dataType:'json',
             success:function(result){
-                var html = "";
+                let html = "";
                 if(result.data && result.data.length > 0){
                     for(i in result.data){
                         html += '<input type="radio"  name="roleId" value="'+result.data[i].roleId+'" title="'+result.data[i].roleName+'" >' +

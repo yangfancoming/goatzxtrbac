@@ -83,10 +83,10 @@
             selectCardHeight: "150"
         });
 
-        var param = dtree.getNowParam("dataTree");
+        let param = dtree.getNowParam("dataTree");
         formDate = $("#parentId");
         dtree.on("node('dataTree')" ,function(obj){
-            var param = dtree.getNowParam("dataTree");
+            let param = dtree.getNowParam("dataTree");
             $("#parentId").val(param.nodeId);
             formDate = $("#parentId");
         });

@@ -132,9 +132,9 @@
                 });
 
                 form.on('submit(menu-query)', function(data){ //模糊查询方法
-                    var formData = data.field;
-                    var name = formData.name;
-                    var type = formData.type;
+                    let formData = data.field;
+                    let name = formData.name;
+                    let type = formData.type;
                     table.reload(('menu-table'),{ // table重载
                         where: {//这里传参  向后台
                             queryName: name,
@@ -157,7 +157,7 @@
                 }
 
                 window.edit = function(obj){
-                    var data = obj.data;
+                    let data = obj.data;
                     layer.open({
                         type: 2,
                         title: '修改',
@@ -167,7 +167,7 @@
                     });
                 }
                 window.remove = function(obj){
-                    var data = obj.data;
+                    let data = obj.data;
                     layer.confirm('确定删除吗,如果存在下级节点则一并删除，此操作不能撤销！', {icon: 3, title:'提示'}, function(index){
                         layer.close(index);
                         let loading = layer.load();

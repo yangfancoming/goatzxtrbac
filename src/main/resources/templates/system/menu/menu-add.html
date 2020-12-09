@@ -125,10 +125,10 @@
                         console.log(d);
                     }
                 });
-                var param = dtree.getNowParam("dataTree");
+                let param = dtree.getNowParam("dataTree");
                 formDate = $("#parentId");
                 dtree.on("node('dataTree')" ,function(obj){
-                    var param = dtree.getNowParam("dataTree");
+                    let param = dtree.getNowParam("dataTree");
                     $("#parentId").val(param.nodeId);
                     formDate = $("#parentId");
                 });
@@ -162,10 +162,10 @@
                     }
                 });
                 form.on('submit(user-save)', function(data){
-                    var permissionId = formDate;
-                    var bs = data.field.parentId
+                    let permissionId = formDate;
+                    let bs = data.field.parentId
                     data.field.parentId = Number (bs)
-                    var json = JSON.stringify(data.field)
+                    let json = JSON.stringify(data.field)
                     $.ajax({
                         url:'/api/menu',
                         data:json,

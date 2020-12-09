@@ -113,17 +113,17 @@
             select: true, //指定下拉树模式
             selectCardHeight: "200",
         });
-        var param = dtree.getNowParam("dataTree");
+        let param = dtree.getNowParam("dataTree");
         formDate = $("#deptId");
         dtree.on("node('dataTree')" ,function(obj){
-            var param = dtree.getNowParam("dataTree");
+            let param = dtree.getNowParam("dataTree");
             $("#deptId").val(param.nodeId);
             formDate = $("#deptId");
         });
 
         form.on('submit(user-save)', function(data){
-            var postIds = data.field.postIds;
-            var postId = postIds.split(",");
+            let postIds = data.field.postIds;
+            let postId = postIds.split(",");
             data.field.postIds = postId
             $.ajax({
                 url:'/api/user',
@@ -162,7 +162,7 @@
             type:"GET",
             dataType:'json',
             success:function(result){
-                var html = "";
+                let html = "";
                 if(result.data && result.data.length > 0){
                     for(i in result.data){
                         html += '<input type="radio"  name="roleId" value="'+result.data[i].roleId+'" title="'+result.data[i].roleName+'" >' +
@@ -175,7 +175,7 @@
         });
     }
     function getCurrentUserRole(callback){
-        var userId = $("#userId").val();
+        let userId = $("#userId").val();
         $.ajax({
             url:"/api/roleuser",
             type:"POST",
@@ -186,12 +186,12 @@
             success:function(result){
                 if(result.code == 200){
                     if(result.data){
-                        var str1 = JSON.stringify(result.data);
+                        let str1 = JSON.stringify(result.data);
                         if (str1 == "[]"){
                             str1 = "[{'roleId': null}]"
                         }
-                        var str = str1.substring(1,str1.length-1)
-                        var obj = eval('('+str+')');
+                        let str = str1.substring(1,str1.length-1)
+                        let obj = eval('('+str+')');
                         $("[name=roleId]").each(function () {
                             if($(this).val() == obj.roleId){
                                 $(this).attr("checked","checked");

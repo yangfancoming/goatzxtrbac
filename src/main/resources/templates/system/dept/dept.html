@@ -152,7 +152,7 @@
         });
 
         form.on('submit(dept-query)', function(data){ //模糊查询方法
-            var formData = data.field;
+            let formData = data.field;
             table.reload(('dept-table'),{ // table重载
                 treeColIndex: 1,//树形图标显示在第几列
                 treeSpid: 0,//最上级的父级id
@@ -183,7 +183,7 @@
         }
 
         window.edit = function(obj){
-            var data = obj.data;
+            let data = obj.data;
             layer.open({
                 type: 2,
                 title: '修改',
@@ -193,7 +193,7 @@
             });
         }
         window.remove = function(obj){
-            var data = obj.data;
+            let data = obj.data;
             layer.confirm('确定删除吗,此操作不能撤销！', {icon: 3, title:'提示'}, function(index){
                 layer.close(index);
                 let loading = layer.load();

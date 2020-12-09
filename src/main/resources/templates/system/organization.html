@@ -127,7 +127,7 @@
 				]
 			]
 
-			var DTree = dtree.render({
+			let DTree = dtree.render({
 				elem: "#organizationTree",
 				//data: data,
 				initLevel: "2", //默认展开层级为1
@@ -155,7 +155,7 @@
 			// 绑定节点点击事件
 			dtree.on("node(organizationTree)", function (obj) {
 				if (!obj.param.leaf) {
-					var $div = obj.dom;
+					let $div = obj.dom;
 					DTree.clickSpread($div); //调用内置函数展开节点
 				} else {
 					layer.msg("叶子节点就不展开了,刷新右侧列表");

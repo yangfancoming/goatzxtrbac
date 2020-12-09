@@ -79,9 +79,9 @@
             }
         });
         form.on('submit(role-save)', function(data){
-            var paramJsonArr = Dtree.getCheckbarJsonArrParam();
-            var ids = paramJsonArr["nodeId"]
-            var datas = data.field
+            let paramJsonArr = Dtree.getCheckbarJsonArrParam();
+            let ids = paramJsonArr["nodeId"]
+            let datas = data.field
             datas['menuIds'] = ids
             datas['roleId'] = roleId
 

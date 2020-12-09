@@ -90,7 +90,7 @@
         let form = layui.form;
         let $ = layui.jquery;
         let dtree = layui.dtree;
-        var iconPicker = layui.iconPicker;
+        let iconPicker = layui.iconPicker;
         // 初始化树
         dtree.render({
             elem: "#dataTree",
@@ -125,10 +125,10 @@
                 console.log(d);
             }
         });
-        var param = dtree.getNowParam("dataTree");
+        let param = dtree.getNowParam("dataTree");
         formDate = $("#parentId");
         dtree.on("node('dataTree')" ,function(obj){
-            var param = dtree.getNowParam("dataTree");
+            let param = dtree.getNowParam("dataTree");
             $("#parentId").val(param.nodeId);
             formDate = $("#parentId");
         });
@@ -143,8 +143,8 @@
             ,'只能是整数哦'
         ],
             radio: function(value,item){
-                var $ = layui.$;
-                var verifyName=$(item).attr('name')
+                let $ = layui.$;
+                let verifyName=$(item).attr('name')
                     , verifyType=$(item).attr('type')
                     ,formElem=$(item).parents('.layui-form')//获取当前所在的form元素，如果存在的话
                     ,verifyElem=formElem.find('input[name='+verifyName+']')//获取需要校验的元素
