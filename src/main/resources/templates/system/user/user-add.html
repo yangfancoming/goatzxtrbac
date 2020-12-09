@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sys="">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -52,12 +52,12 @@
                         <input type="radio" name="status" value="1" title="激活" checked>
                         <input type="radio" name="status" value="0" title="禁用">
                     </div>
+
                 </div>
                 <input type="text" id="roleId"  name="roleId" style="display:none;"/>
                 <div class="layui-form-item">
                     <label class="layui-form-label">角色</label>
-                    <div class="layui-input-block show-role-container">
-                    </div>
+                    <div class="layui-input-block show-role-container"></div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">部门</label>
@@ -93,8 +93,7 @@
 <script th:src="@{/PearAdmin/component/layui/layui.js}" charset="utf-8"></script>
 
 <script>
-    layui.use(['form','formSelects','dtree','jquery'],function(){
-        let formSelects = layui.formSelects;
+    layui.use(['form','dtree','jquery'],function(){
         let form = layui.form;
         $ = layui.jquery;
         let dtree = layui.dtree;
@@ -114,7 +113,6 @@
             select: true, //指定下拉树模式
             selectCardHeight: "200",
         });
-        let param = dtree.getNowParam("dataTree");
         formDate = $("#deptId");
         dtree.on("node('dataTree')" ,function(obj){
             let param = dtree.getNowParam("dataTree");

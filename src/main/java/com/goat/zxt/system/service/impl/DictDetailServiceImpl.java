@@ -25,7 +25,7 @@ public class DictDetailServiceImpl implements DictDetailService {
 
     @Override
     public Result<SysDictDetail> getDictByName(Integer offectPosition, Integer limit,String dictName) {
-        SysDict dictByName =dictService.getDictByName(dictName);
+        SysDict dictByName = dictService.getDictByName(dictName);
         Integer dictId = dictByName.getDictId();
         Page page = PageHelper.offsetPage(offectPosition,limit);
         List<SysDictDetail> fuzzyDictDetailByPage = getDictDetail(dictId);

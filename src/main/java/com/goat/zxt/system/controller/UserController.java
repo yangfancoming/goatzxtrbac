@@ -47,7 +47,7 @@ public class UserController {
     @ResponseBody
     @PreAuthorize("hasAnyAuthority('user:list')")
     public Result<SysUser> userList(QueryRequest request, SysUser model){
-        log.info("查询用户列表");
+        log.info("查询用户列表 ---> {}", JSON.toJSONString(model));
         PageHelper.startPage(request.getPage(), request.getLimit());
         List<SysUser> results = userService.list(model);
         PageInfo<SysUser> pageInfo = new PageInfo<>(results);
