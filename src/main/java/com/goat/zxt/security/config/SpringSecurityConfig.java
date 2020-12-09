@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -41,7 +42,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyAuthenticationFailureHandler authenticationFailureHandler;
 
-
     // 无权限拦截器
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
@@ -50,12 +50,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private RestfulAccessDeniedHandler accessDeniedHandler;
 
-
     @Override
     public void configure(WebSecurity web) {
         //放行静态资源
-        web.ignoring()
-                .antMatchers(HttpMethod.GET,
+        web.ignoring().antMatchers(HttpMethod.GET,
                         "/swagger-resources/**",
                         "/swagger-ui.html",
                         "/PearAdmin/**",
@@ -85,8 +83,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(verifyCodeFilter, UsernamePasswordAuthenticationFilter.class);
-        //关闭csrf
+        // 由于使用的是JWT，我们这里不需要csrf
         http.csrf().disable()
+                // 基于token，所以不需要session
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionFixation().none().and()
+
                 //未登陆时返回 JSON 格式的数据给前端
                 .httpBasic()
                 .and()
