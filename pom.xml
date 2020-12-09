@@ -12,7 +12,7 @@
     <packaging>war</packaging>
 
     <groupId>com.goat.zxt</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>goatrbac</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>goatrbac</name>
     <description>goatrbac-zxt</description>
