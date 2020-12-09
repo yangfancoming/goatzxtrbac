@@ -48,7 +48,7 @@ PatternLayout：输出格式，不设置默认为 %m%n
             modulate="true" : 产生文件是否以0点偏移时间,即6点,12点,18点,0点，如果没到整点时间 就由于size策略生成日志文件，那么文件名的时间为整点时间的前一个小时 -->
             
             <!-- SizeBasedTriggeringPolicy :文件大小滚动策略-->
-            <SizeBasedTriggeringPolicy size="30 MB"/>
+            <SizeBasedTriggeringPolicy size="30 KB"/>
         </Policies>
         <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
         <DefaultRolloverStrategy max="20"/>
@@ -69,7 +69,7 @@ PatternLayout：输出格式，不设置默认为 %m%n
 <!--            <TimeBasedTriggeringPolicy interval="6" modulate="true"/>-->
             <!-- SizeBasedTriggeringPolicy :文件大小滚动策略-->
             
-            <SizeBasedTriggeringPolicy size="30 MB"/>
+            <SizeBasedTriggeringPolicy size="30 KB"/>
         </Policies>
         <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
         <DefaultRolloverStrategy max="10"/>
@@ -82,7 +82,7 @@ PatternLayout：输出格式，不设置默认为 %m%n
         <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
         <Policies>
             
-            <SizeBasedTriggeringPolicy size="30 MB"/>
+            <SizeBasedTriggeringPolicy size="30 KB"/>
         </Policies>
         <DefaultRolloverStrategy max="20"/>
     </RollingFile>
@@ -93,7 +93,7 @@ PatternLayout：输出格式，不设置默认为 %m%n
         <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
         <Policies>
             
-            <SizeBasedTriggeringPolicy size="30 MB"/>
+            <SizeBasedTriggeringPolicy size="30 KB"/>
         </Policies>
         <DefaultRolloverStrategy max="20"/>
     </RollingFile>
