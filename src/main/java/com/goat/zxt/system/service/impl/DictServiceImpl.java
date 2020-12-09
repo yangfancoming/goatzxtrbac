@@ -1,11 +1,7 @@
 package com.goat.zxt.system.service.impl;
 
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.goat.zxt.common.exceptionhandler.MyException;
-import com.goat.zxt.common.utils.Result;
-import com.goat.zxt.common.utils.ResultCode;
 import com.goat.zxt.common.utils.UserConstants;
 import com.goat.zxt.system.dao.DictDao;
 import com.goat.zxt.system.dao.DictDetailDao;

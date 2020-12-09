@@ -1,12 +1,13 @@
 package com.goat.zxt.system.controller;
 
 
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.goat.zxt.common.utils.*;
+import com.goat.zxt.common.utils.QueryRequest;
+import com.goat.zxt.common.utils.Result;
+import com.goat.zxt.common.utils.ResultCode;
+import com.goat.zxt.common.utils.UserConstants;
 import com.goat.zxt.system.entity.SysDict;
-import com.goat.zxt.system.entity.SysUser;
 import com.goat.zxt.system.service.DictService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
