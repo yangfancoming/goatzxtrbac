@@ -8,7 +8,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 @MapperScan({"com.goat.zxt.buzz.dao","com.goat.zxt.system.dao"})
-//@EnableScheduling // 开启定时任务
 public class GoatrbacApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
@@ -19,4 +18,5 @@ public class GoatrbacApplication extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(GoatrbacApplication.class);
     }
+
 }

@@ -1,7 +1,8 @@
 # 待完成
     修复用户名可以一致的bug
     
-    
+# 过滤器 
+    ALogFilter   BJwtAuthenticationTokenFilter CVerifyCodeFilter 三个过滤的首字母是为了调整 3个过滤器的执行顺序
 #  有时用layui的表单元素真的傻难看傻难看的
     解决方案：
     

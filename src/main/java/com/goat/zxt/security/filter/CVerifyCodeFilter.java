@@ -2,6 +2,8 @@ package com.goat.zxt.security.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.goat.zxt.common.utils.Result;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -15,13 +17,18 @@ import java.io.IOException;
 
 
 @Component
-public class VerifyCodeFilter extends OncePerRequestFilter {
+public class CVerifyCodeFilter extends OncePerRequestFilter {
+
+    private Logger log = LoggerFactory.getLogger(getClass());
 
     private String defaultFilterProcessUrl = "/login";
     private String method = "POST";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+
+        log.info("验证码 过滤器 ---> {}", JSON.toJSONString(chain));
+
         if (method.equalsIgnoreCase(request.getMethod()) && defaultFilterProcessUrl.equals(request.getServletPath())) {
             // 登录请求校验验证码，非登录请求不用校验
             HttpSession session = request.getSession();

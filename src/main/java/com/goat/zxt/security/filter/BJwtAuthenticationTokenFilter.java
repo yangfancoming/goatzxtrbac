@@ -23,7 +23,7 @@ import java.io.IOException;
 
 
 @Component
-public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
+public class BJwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -41,7 +41,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,HttpServletResponse response,FilterChain chain) throws ServletException, IOException {
-        log.info("JwtAuthenticationTokenFilter ---> {}", JSON.toJSONString(chain));
+        log.info("jwt 过滤器 ---> {}", JSON.toJSONString(chain));
         //拿到requset中的head
         String authHeader = request.getHeader(this.tokenHeader);
         if (authHeader != null && authHeader.startsWith(this.tokenHead)) {

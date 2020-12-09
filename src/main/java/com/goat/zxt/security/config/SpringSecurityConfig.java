@@ -2,7 +2,7 @@ package com.goat.zxt.security.config;
 
 
 import com.goat.zxt.security.UserDetailsServiceImpl;
-import com.goat.zxt.security.filter.VerifyCodeFilter;
+import com.goat.zxt.security.filter.CVerifyCodeFilter;
 import com.goat.zxt.security.handler.MyAuthenticationFailureHandler;
 import com.goat.zxt.security.handler.MyAuthenticationSuccessHandler;
 import com.goat.zxt.security.handler.RestAuthenticationEntryPoint;
@@ -32,7 +32,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // 验证码拦截器
     @Autowired
-    private VerifyCodeFilter verifyCodeFilter;
+    private CVerifyCodeFilter verifyCodeFilter;
 
     // 登录成功逻辑
     @Autowired
