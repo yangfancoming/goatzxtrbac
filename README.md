@@ -1,3 +1,5 @@
+# 访问地址 https://www.goatcoming.cn/login
+
 # 待完成
     修复用户名可以一致的bug
     
