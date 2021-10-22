@@ -9,6 +9,7 @@
 </head>
 <body>
 <form class="layui-form" action="">
+
     <div class="mainBox">
         <div class="main-container">
             <div class="main-container">
@@ -30,10 +31,10 @@
                     <label class="layui-form-label">
                         <span style="color: red">*</span>排序</label>
                     <div class="layui-input-block">
-                        <input type="text"  name="sort"th:value="${SysDict.sort}" lay-verify="sort" autocomplete="off" placeholder="请输入排序" class="layui-input">
+                        <input type="text"  name="sort" th:value="${SysDict.sort}" lay-verify="sort" autocomplete="off" placeholder="请输入排序" class="layui-input">
                     </div>
                 </div>
-
+                <input type="hidden"  name="dictId"  th:value="${SysDict.dictId}">
             </div>
         </div>
     </div>
@@ -56,6 +57,7 @@
         let $ = layui.jquery;
 
         form.on('submit(dict-save)', function(data){
+            console.log(data.field,111111)
             $.ajax({
                 url:'/api/dict',
                 data:JSON.stringify(data.field),

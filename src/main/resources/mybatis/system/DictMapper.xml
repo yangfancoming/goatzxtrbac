@@ -3,16 +3,17 @@
 
 <mapper namespace="com.goat.zxt.system.dao.DictDao">
 
+<!--    dict_id, dict_name, description, sort, create_by, update_by, create_time, update_time -->
+
     <sql id="selectDictVo">
-        select di.dict_id,di.dict_name,di.description,di.sort,di.create_by,di.update_by,di.create_time,di.update_time
-        from sys_dict di
+        select * from sys_dict
     </sql>
 
     <select id="list" resultType="com.goat.zxt.system.entity.SysDict">
         <include refid="selectDictVo"/>
         <where>
             <if test="dictName != null and dictName != ''">
-                AND di.dict_name like CONCAT('%', #{dictName}, '%')
+                AND dict_name like CONCAT('%', #{dictName}, '%')
             </if>
         </where>
 
@@ -20,7 +21,7 @@
 
     <select id="getDictByName" parameterType="string" resultType="com.goat.zxt.system.entity.SysDict">
         <include refid="selectDictVo"/>
-        where di.dict_name = #{dictName}
+        where dict_name = #{dictName}
     </select>
 
 
@@ -28,9 +29,9 @@
         update sys_dict
         <set>
             <if test="dictName != null and dictName != ''">dict_name = #{dictName},</if>
-            <if test="description != null">description = #{description},</if>
-            <if test="sort != null and sort != ''">sort = #{sort},</if>
-            update_time = #{updateTime}
+            <if test="description != null and description != ''">description = #{description},</if>
+            <if test="sort != null and sort != '' and sort != 0">sort = #{sort},</if>
+            update_time = now()
         </set>
         where dict_id = #{dictId}
     </update>
